@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object Lock Reporting</title>
+    <link rel="stylesheet" type="text/css" href="object_lock.css">
+</head>
+<body>
+    <div class="login-box">
+        <h2>Object Lock Reporting</h2>
+        <form>
+            <div class="user-box">
+                <input type="text" name="lockedObjectName" required>
+                <label>Locked Object Name</label>
+            </div>
+            <div class="user-box">
+                <input type="text" name="lockingJobName" required>
+                <label>Locking Job Name</label>
+            </div>
+            <div class="user-box">
+                <input type="text" name="effectedJobName" required>
+                <label>Effected Job Name</label>
+            </div>
+            <div class="user-box">
+                <input type="text" name="messageTime" required>
+                <label>Message Time</label>
+            </div>
+            <div class="user-box">
+                <input type="text" name="lockReleasedTime" required>
+                <label>Lock Released Time</label>
+            </div>
+            <div class="user-box">
+                <label>Lock Released Date</label><br>
+                <input type="date" name="lockReleasedDate" required>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
