@@ -1,0 +1,225 @@
+<?php
+require 'treCon.php';
+
+if (isset($_POST["save"])) {
+    $n = $_POST["Login_time"];
+    $k = $_POST["stop_server"];
+    $vx = $_POST["stop_server_end"];
+    $a = $_POST["start_server_time"];
+    $b = $_POST["eod_start"];
+    $c = $_POST["eod_end"];
+    $d = $_POST["file_tranfer"];
+    $x = $_POST["file_tranferend"];
+    $e = $_POST["File_system"];
+    $f = $_POST["File_systemend"];
+    $g = $_POST["sys_logout"];
+    $i = $_POST["FCBU"];
+    $j = $_POST["DBU"];
+    $l = $_POST["posteod"];
+    $w = $_POST["endpeod"];
+    $m = $_POST["emname"];
+    $date = $_POST["date"];
+  
+
+    // Execute INSERT query
+    $query = "INSERT INTO tresury1 VALUES ('$m', '$n', '$g', '$a', '$b', '$c', '$e', '$l', '$w', '$f', '$i', '$j', '$d', '$x', '$k', '$vx', '$date')";
+    mysqli_query($conn, $query);
+    echo
+
+    "
+    <script> alert('Data Inserted Successfully'); </script>
+    "; 
+    
+    }
+    ?>
+
+
+
+
+
+
+<html>
+    <title>Tresury_EOD</title>
+    <style>
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+        
+        td, th {
+          border: 2px solid #181818;
+          text-align: left;
+          padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+        .button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        .button1 {
+         background-color: white; 
+            color: black; 
+            border: 2px solid #4CAF50;
+        }
+
+        .button2 {
+         background-color: white; 
+            color: black; 
+            border: 2px solid #9d2a52;
+        }
+
+        .button3 {
+         background-color: white; 
+            color: black; 
+            border: 2px solid #ffff31;
+            
+        }
+
+
+
+        
+        </style>
+
+    <head><h1>Tresury EOD Process - Digital Checklist</h1>
+        <link rel="stylesheet" href="clock.css">
+    </head>
+
+    <body>
+      <form class="" action="" method="post" autocomplete="off">
+            <button class="button button1" name = "error">Error</button>  
+            <button type ="submit" class="button button2" name="save">Save</button>
+            <button class="button button3" name="Clear">Clear</button>
+
+            <label for="emname">User Name:</label>
+            <select name="emname" >
+            <option value="KasunM">KasunM</option>
+            <option value="kasunG">kasunG</option>
+            <option value="Akalanka">Akalanka</option>
+            <option value="Saja">Saja</option>
+            <option value="Sanjeewa">Sanjeewa</option>
+            <option value="Vishadh">Vishadh</option>
+            </select>
+            
+            Date <input type="date" name="date">
+
+            <div id="clock">8:10:45</div>
+
+ 
+            <script src="clock.js"></script> 
+
+
+            <div id="clockContainer">
+                <div id="hour"></div>
+                <div id="minute"></div>
+                <div id="second"></div>
+            </div>
+            
+         
+            <h2>Peoples Bank</h2>  
+            
+            
+            <table>
+              <tr>
+                <th>Number</th>
+                <th style="width:70%">Process</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+              </tr>
+              <tr>
+                <td>01</td>
+                <td>Login to FT application Server 172.18.124.20</td>
+                <td><input type="text" name="Login_time"> </td>
+               <td> </td>
+              </tr>
+              <tr>
+                <td>02</td>
+                <td>Stop Services <b>OPT 4 , Stop all services <br>
+                     OPT 8, Check Process Status</b></td>
+                <td><input type="text" name="stop_server"></td>
+                <td><input type="text" name="stop_server_end"></td>
+              
+              </tr>
+              <tr>
+                <td>03</td>
+                <td>1. <b>Start Services</b><br>
+                Opt. 1 - FTMANAGER DEALCAP<br>
+                opt. 3 - JASPER REPORT Server<br>
+                opt. 8 - Check Process Status</td>
+                <td><input type="text" name="start_server_time"></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>04</td>
+                <td>EOD Run <br>
+                Log in to Finacle Treasury<br>
+            EODOP - PW<br><br> Operations<br>
+        <b>EOD - Run EOD</b><br>
+    <b>EOD Entity group - PEOPLES - Run EOD</b></td>
+                <td><input type="text" name="eod_start"></td>
+                <td><input type="text" name="eod_end"></td>
+              </tr>
+              <tr>
+                <td>05</td>
+                <td><b>GL Handoff File Tranfer</b><br>
+                FTLIVE@FTPROD>/fintrusr/eod>Base<br>
+            FTLIVE@FTPROD> /Fintrapp> cd interfaces/sibs/GLHandoff <br>
+        <b>Transfer File to staging server using FileZilla</b></td>
+                <td><input type="text" name="file_tranfer"></td>
+                <td><input type="text" name="file_tranferend"></td>
+              </tr>
+              <tr>
+                <td>06</td>
+                <td><b>FCBU</b>   <input type="text" name="FCBU"><BR>
+                
+                <B>DBU</B>        <input type="text" name="DBU"> </td>
+                <td></td>
+                <td></td>
+              </tr>
+
+              <tr>
+                <td>07</td>
+                <td>Post EOD Dump
+                    <br> Menu - 7. Export/Import Database <br>
+                    2 - > Post EOD Export Exit Menu
+                </td>
+                <td><input type="text" name="posteod"></td>
+                <td><input type="text" name="endpeod"></td>
+              </tr>
+
+              <tr>
+                <td>08</td>
+                <td><b>File Transfer</b>
+                    <br>  <br>
+                   
+                </td>
+                <td><input type="text" name="File_system"></td>
+                <td><input type="text" name="File_systemend"></td>
+              </tr>
+
+              <tr>
+                <td>09</td>
+                <td><b>Logout</b>
+                    <br> <br>
+                    
+                </td>
+                
+                <td><input type="text" name="sys_logout"></td>
+              </tr>
+            </table>
+            
+      </form>    
+    </body>
+</html>
