@@ -1,0 +1,93 @@
+<?php
+require 'treCon.php';
+
+header("Content-Security-Policy: frame-ancestors 'none'");
+
+if (isset($_POST["save"])) {
+    $n = $_POST["Login_time"];
+    $k = $_POST["stop_server"];
+    $vx = $_POST["stop_server_end"];
+    $a = $_POST["start_server_time"];
+    $b = $_POST["eod_start"];
+    $c = $_POST["eod_end"];
+    $d = $_POST["file_tranfer"];
+    $x = $_POST["file_tranferend"];
+    $e = $_POST["File_system"];
+    $f = $_POST["File_systemend"];
+    $g = $_POST["sys_logout"];
+    $i = $_POST["FCBU"];
+    $j = $_POST["DBU"];
+    $l = $_POST["posteod"];
+    $w = $_POST["endpeod"];
+    $m = $_POST["emname"];
+    $date = $_POST["date"];
+
+    // Execute INSERT query
+    $query = "INSERT INTO tresury1 VALUES ('$m', '$n', '$g', '$a', '$b', '$c', '$e', '$l', '$w', '$f', '$i', '$j', '$d', '$x', '$k', '$vx', '$date')";
+    mysqli_query($conn, $query);
+    echo "
+    <script> alert('Data Inserted Successfully'); </script>
+    "; 
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treasury_EOD</title>
+    <style>
+        /* CSS styles */
+    </style>
+</head>
+<body>
+    <h1>Treasury EOD Process - Digital Checklist</h1>
+    <form action="" method="post" autocomplete="off">
+        <button type="button" class="button button1" name="error">Error</button>  
+        <button type="submit" class="button button2" name="save">Save</button>
+        <button type="button" class="button button3" name="clear">Clear</button>
+
+        <label for="emname">User Name:</label>
+        <select name="emname">
+            <option value="KasunM">KasunM</option>
+            <option value="kasunG">kasunG</option>
+            <option value="Akalanka">Akalanka</option>
+            <option value="Saja">Saja</option>
+            <option value="Sanjeewa">Sanjeewa</option>
+            <option value="Vishadh">Vishadh</option>
+        </select>
+        
+        <label for="date">Date:</label>
+        <input type="date" name="date">
+
+        <!-- Clock elements -->
+        <div id="clock">8:10:45</div>
+        <script src="clock.js"></script> 
+        <div id="clockContainer">
+            <div id="hour"></div>
+            <div id="minute"></div>
+            <div id="second"></div>
+        </div>
+        
+        <h2>Peoples Bank</h2>  
+        
+        <!-- Process table -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Number</th>
+                    <th style="width:70%">Process</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <!-- Table rows for process steps -->
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</body>
+</html>
