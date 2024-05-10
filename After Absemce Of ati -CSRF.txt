@@ -1,0 +1,93 @@
+<?php
+require 'database.php';
+
+// Function to generate CSRF token
+function generateCSRFToken() {
+    return bin2hex(random_bytes(32));
+}
+
+// Function to verify CSRF token
+function verifyCSRFToken($token) {
+    return hash_equals($_SESSION['csrf_token'], $token);
+}
+
+// Check if form is submitted
+if(isset($_POST["btn2"])){
+
+    // Validate CSRF token
+    if(!verifyCSRFToken($_POST['csrf_token'])) {
+        // Token mismatch, handle error
+        echo "<script> alert('CSRF Token Validation Failed'); </script>";
+        exit;
+    }
+
+    $username = $_POST["text1"];
+    $password = $_POST["text2"];
+
+    // Prepare the SQL statement with placeholders
+    $stmt = mysqli_prepare($conn, "SELECT * FROM login WHERE emnumber = ? OR name = ?");
+
+    // Bind parameters to the placeholders
+    mysqli_stmt_bind_param($stmt, "ss", $username, $username);
+
+    // Execute the prepared statement
+    mysqli_stmt_execute($stmt);
+
+    // Get the result set
+    $result = mysqli_stmt_get_result($stmt);
+
+    // Fetch the row
+    $row = mysqli_fetch_assoc($result);
+
+    if(mysqli_num_rows($result) > 0){
+        if(password_verify($password, $row["password"])){
+            $_SESSION["login"] = true;
+            $_SESSION["id"] = $row["id"];
+            header("Location: home.php");
+            exit;
+        }
+        else{
+            echo "<script> alert('Wrong Password'); </script>";
+        }
+    }
+    else{
+        echo "<script> alert('User Not Registered'); </script>";
+    }
+}
+
+// Generate CSRF token and store it in the session
+$_SESSION['csrf_token'] = generateCSRFToken();
+?>
+
+<html>
+    <head>
+    <title>
+        Login Form Design
+    </title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <body>
+        <div class="loginbox"> <img src="avatar.jpg" class="avatar">
+            <h1>
+                Login Here
+            </h1>
+            <form class="" action="" method="post" autocomplete="off">
+                <p>
+                    Username
+                </p>
+                <input type="text" name="text1" placeholder="Enter Username" >
+                <p>Password</p>
+
+                <input type="password" name="text2" placeholder="Enter Password">
+
+                <!-- CSRF Token Field -->
+                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+
+                <input type="submit" name="btn2" value="Login">
+                <a href="tre.php">Lost Your Password</a></br>
+                <a href="registration.php">Don't have an account?</a>
+            </form>
+        </div>
+    </body>
+    </head>
+</html>

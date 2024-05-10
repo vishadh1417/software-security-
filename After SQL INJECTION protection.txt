@@ -1,0 +1,67 @@
+<?php
+require 'database.php';
+if(isset($_POST["btn2"])){
+    $username = $_POST["text1"];
+    $password = $_POST["text2"];
+    
+    // Prepare the SQL statement with placeholders
+    $stmt = mysqli_prepare($conn, "SELECT * FROM login WHERE emnumber = ? OR name = ?");
+    
+    // Bind parameters to the placeholders
+    mysqli_stmt_bind_param($stmt, "ss", $username, $username);
+    
+    // Execute the prepared statement
+    mysqli_stmt_execute($stmt);
+    
+    // Get the result set
+    $result = mysqli_stmt_get_result($stmt);
+    
+    // Fetch the row
+    $row = mysqli_fetch_assoc($result);
+    
+    if(mysqli_num_rows($result) > 0){
+        if(password_verify($password, $row["password"])){
+            $_SESSION["login"] = true;
+            $_SESSION["id"] = $row["id"];
+            header("Location: home.php");
+        }
+        else{
+            echo "<script> alert('Wrong Password'); </script>";
+        }
+    }
+    else{
+        echo "<script> alert('User Not Registered'); </script>";
+    }
+}
+
+?>
+
+<html>
+    <head>
+    <title>
+        Login Form Design
+    </title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <body>
+        <div class="loginbox"> <img src="avatar.jpg" class="avatar">
+            <h1>
+                Login Here
+            </h1>
+            <form class="" action="" method="post" autocomplete="off">
+                <p>
+                    Username
+                </p>
+                <input type="text" name="text1" placeholder="Enter Username" >
+                <p>Password</p>
+
+                <input type="password" name="text2" placeholder="Enter Password">
+                <input type="submit" name="btn2" value="Login">
+                <a href="tre.php">Lost Your Password</a></br>
+                <a href="registration.php">Don't have an account?</a>
+            </form>
+        </div>
+    </body>
+    </head>
+
+</html>
